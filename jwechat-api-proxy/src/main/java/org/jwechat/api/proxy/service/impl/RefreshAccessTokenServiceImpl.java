@@ -50,6 +50,7 @@ public class RefreshAccessTokenServiceImpl implements RefreshAccessTokenService 
                 log.info("access_token刷新成功~新token为{}",accessToken);
             }else{
                 log.info("重新获取缓存access_token失败~");
+//                throw new RuntimeException("");
             }
         }
         return accessToken;

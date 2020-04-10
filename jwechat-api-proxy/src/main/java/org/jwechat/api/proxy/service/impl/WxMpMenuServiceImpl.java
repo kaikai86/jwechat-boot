@@ -29,8 +29,6 @@ import java.util.Map;
 public class WxMpMenuServiceImpl implements WxMpMenuService {
 
     @Autowired
-    private RedisUtil redisUtil;
-    @Autowired
     private RefreshAccessTokenServiceImpl refreshAccessTokenService;
     @Autowired
     private ObjectMapper objectMapper;

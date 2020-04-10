@@ -1,7 +1,7 @@
 package org.jwechat.common.bean;
 
-import lombok.Getter;
-import lombok.Setter;
+import cn.hutool.json.JSONObject;
+import lombok.*;
 
 /**
  * @Title WxMpResult
@@ -13,8 +13,25 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class WxMpResult {
 
     private Integer errcode;
     private String errmsg;
+    private JSONObject data;
+
+    public static WxMpResult ok() {
+        return WxMpResult.builder().errcode(0).errmsg("success!").build();
+    }
+
+    public static WxMpResult ok(String errmsg) {
+        return WxMpResult.builder().errcode(0).errmsg(errmsg).build();
+    }
+
+    public static WxMpResult ok(JSONObject data) {
+        return WxMpResult.builder().errcode(0).errmsg("success!").data(data).build();
+    }
+
 }

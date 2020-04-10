@@ -5,11 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.jwechat.common.bean.WxMpResult;
 import org.jwechat.token.server.service.RefreshAccessTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.WebUtils;
 
 /**
  * @Title RefreshAccessTokenApi

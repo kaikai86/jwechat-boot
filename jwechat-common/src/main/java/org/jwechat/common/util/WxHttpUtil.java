@@ -46,7 +46,7 @@ public class WxHttpUtil {
     }
 
     /**
-     *
+     *json请求
      * @param uri   要请求的url
      * @param jsonBody  请求体
      * @param params    请求路径参数
@@ -62,7 +62,7 @@ public class WxHttpUtil {
     }
 
     /**
-     *
+     * json请求
      * @param uri   要请求的url
      * @param params    请求路径参数
      * @return
@@ -73,5 +73,15 @@ public class WxHttpUtil {
                 .header(Header.ACCEPT, "application/json")
                 .timeout(10000)//超时，毫秒
                 .execute().body();
+    }
+
+    /**
+     * 普通http请求
+     * @param uri   要请求的url
+     * @param params 请求路径参数
+     * @return
+     */
+    public static String httpGet(String uri, Map<String,Object> params) {
+        return HttpUtil.get(uri, params, 10000);
     }
 }
