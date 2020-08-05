@@ -1,10 +1,10 @@
 package org.jwechat.api.proxy.client;
 
-import org.jwechat.common.bean.WxMpResult;
+import org.jwechat.common.bean.common.WxMpResult;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @Title TokenServerApiClient
@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient(name = "jwechat-token-server", url = "${token.url}")
 public interface TokenServerApiClient {
 
-    @RequestMapping(value = "/refresh", method = RequestMethod.GET)
-    WxMpResult refresh();
+    @RequestMapping(value = "/mp/refresh", method = RequestMethod.GET)
+    WxMpResult refreshMP();
+
+    @RequestMapping(value = "/corp/refresh", method = RequestMethod.GET)
+    WxMpResult refreshCORP(@RequestParam(required = true,value="agentId") String agentId);
 }

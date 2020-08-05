@@ -1,19 +1,14 @@
 package org.jwechat.token.server.schedule;
 
-import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.jwechat.common.bean.WxMpResult;
+import org.jwechat.common.bean.common.WxMpResult;
 import org.jwechat.common.config.WxCorpConfig;
-import org.jwechat.token.server.service.CorpAccessTokenService;
 import org.jwechat.token.server.service.RefreshAccessTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.math.BigInteger;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,8 +26,6 @@ public class RefreshAccessTokenSchedule {
     @Autowired
     private RefreshAccessTokenService refreshAccessTokenService;
     @Autowired
-    private CorpAccessTokenService corpAccessTokenService;
-    @Autowired
     private WxCorpConfig wxCorpConfig;
 
     /**
@@ -46,7 +39,8 @@ public class RefreshAccessTokenSchedule {
     @Scheduled(cron = "0 0 0/3 * * ?")
     @Scheduled(cron = "0 30 1/3 * * ?")
     public void refreshAccessToken() {
-        WxMpResult result = refreshAccessTokenService.refreshAccessTokenFromMP();
+        WxMpResult wxMpResult = refreshAccessTokenService.refreshAccessTokenFromMP();
+        log.info("[{}] 被动刷新CORP|access_token: --> {}", DateUtil.now(),wxMpResult.getData());
     }
 
     /**
@@ -57,7 +51,8 @@ public class RefreshAccessTokenSchedule {
     public void refreshCorpAccessToken() {
         Map<String, String> secrets = wxCorpConfig.getSecrets();
         for (String agentId : secrets.keySet()) {
-            corpAccessTokenService.getAccessTokenByAgentIdFromCorp(agentId);
+            WxMpResult wxMpResult = refreshAccessTokenService.refreshAccessTokenFromCORP(agentId);
+            log.info("[{}] 被动刷新CORP|access_token: --> {}", DateUtil.now(),wxMpResult.getData());
         }
     }
 }

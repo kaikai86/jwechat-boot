@@ -2,10 +2,11 @@ package org.jwechat.token.server.api;
 
 import cn.hutool.core.date.DateUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.jwechat.common.bean.WxMpResult;
+import org.jwechat.common.bean.common.WxMpResult;
 import org.jwechat.token.server.service.RefreshAccessTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -23,10 +24,17 @@ public class RefreshAccessTokenApi {
     @Autowired
     private RefreshAccessTokenService refreshAccessTokenService;
 
-    @GetMapping("/refresh")
+    @GetMapping("/mp/refresh")
     public WxMpResult refreshAccessToken() {
         WxMpResult result = refreshAccessTokenService.refreshAccessTokenFromMP();
-        log.info("[{}] 被动刷新access_token: --> {}", DateUtil.now(),result);
+        log.info("[{}] 主动刷新access_token: --> {}", DateUtil.now(),result);
+        return result;
+    }
+
+    @GetMapping("/corp/refresh")
+    public WxMpResult refreshCorpAccessToken(@RequestParam(required = true) String agentId) {
+        WxMpResult result = refreshAccessTokenService.refreshAccessTokenFromCORP(agentId);
+        log.info("[{}] 主动刷新access_token: --> {}", DateUtil.now(),result);
         return result;
     }
 }

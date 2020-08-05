@@ -1,7 +1,6 @@
 package org.jwechat.token.server.service;
 
-import org.jwechat.common.bean.WxMpResult;
-import org.springframework.web.bind.annotation.RestController;
+import org.jwechat.common.bean.common.WxMpResult;
 
 /**
  * @Title RefreshAccessTokenService
@@ -13,7 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 public interface RefreshAccessTokenService {
 
-    String TOKEN_BASE_URL="https://api.weixin.qq.com/cgi-bin/token";
+    String MP_TOKEN_BASE_URL="https://api.weixin.qq.com/cgi-bin/token";
+    String CORP_TOKEN_BASE_URL="https://qyapi.weixin.qq.com/cgi-bin/gettoken";
 
-    public WxMpResult refreshAccessTokenFromMP();
+    WxMpResult refreshAccessTokenFromMP();
+
+
+    WxMpResult refreshAccessTokenFromCORP(String agentid);
 }
