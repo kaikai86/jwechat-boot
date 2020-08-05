@@ -26,7 +26,7 @@ public class RedisConfig {
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
-        log.info("-----------------------加载redis缓存配置开始-----------------------");
+//        log.info("-----------------------加载redis缓存配置开始-----------------------");
 
 
         RedisTemplate<String, Object> template = new RedisTemplate<>();
@@ -52,7 +52,7 @@ public class RedisConfig {
 //        template.setHashValueSerializer(jacksonSeial);
         template.afterPropertiesSet();
 
-        log.info("-----------------------加载redis缓存配置结束-----------------------");
+        log.info("-----------------------> 加载redis缓存配置 <-----------------------");
         return template;
     }
 }

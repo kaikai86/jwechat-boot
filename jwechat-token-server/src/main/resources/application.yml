@@ -3,8 +3,8 @@ spring:
     name: jwechat-token-server
   #redis
   redis:
-#    host: 192.168.1.199
-    host: localhost
+    host: 192.168.1.199
+#    host: localhost
     port: 6379
     password: zk900319
     timeout: 6000ms       # 连接超时时间（毫秒）
@@ -19,7 +19,12 @@ server:
   port: 9810
 
 weixin:
-  appid: wx5d57f2472e4236f1
-  secret: bd19ee0342c53bb05a8adfcc5152cae5
-  encodingaeskey: vtS3YUxauSP3ZovKj46Hj61tqDFjtQmHSIujRMOoJw0
-  token: huabaide666888
+#  mp:
+#    appid: wx5d57f2472e4236f1
+#    secret: bd19ee0342c53bb05a8adfcc5152cae5
+#    encodingaeskey: vtS3YUxauSP3ZovKj46Hj61tqDFjtQmHSIujRMOoJw0
+#    token: huabaide666888
+  corp:
+    enabled: true
+    corpid: ww4b055f3bec10790d
+    secrets: {1000004: 'flxH-98wCRjlFe1Ncp5iEIJzuOBsEyShx7Oe5txJx8A', 1000005: '8UPp5StJN1ena2yHF3vBtSfzJZEJr33_EpDHO8PFBps'}

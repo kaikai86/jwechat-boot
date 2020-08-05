@@ -1,4 +1,4 @@
-package org.jwechat.token.server.service;
+package org.jwechat.token.server.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
@@ -8,6 +8,7 @@ import org.jwechat.common.bean.WxMpResult;
 import org.jwechat.common.config.RedisUtil;
 import org.jwechat.common.config.WxMpConfig;
 import org.jwechat.common.util.WxHttpUtil;
+import org.jwechat.token.server.service.RefreshAccessTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 @Slf4j
-public class RefreshAccessTokenServiceImpl implements RefreshAccessTokenService{
+public class RefreshAccessTokenServiceImpl implements RefreshAccessTokenService {
 
     @Autowired
     private WxMpConfig wxConfig;
@@ -35,6 +36,12 @@ public class RefreshAccessTokenServiceImpl implements RefreshAccessTokenService{
 
     @Override
     public WxMpResult refreshAccessTokenFromMP() {
+        WxMpResult result = new WxMpResult();;
+        if (!wxConfig.isEnabled()) {
+            result.setErrcode(-1000);
+            result.setErrmsg("微信公众号功能未开启");
+            return result;
+        }
         //1、通过HTTP接口刷新access_token
         Map<String, Object> tokenMap = new HashMap<>();
         tokenMap.put("grant_type","client_credential");
@@ -44,12 +51,11 @@ public class RefreshAccessTokenServiceImpl implements RefreshAccessTokenService{
         String response = WxHttpUtil.httpGetJson(TOKEN_BASE_URL, tokenMap);
         JSONObject jsonObject = JSONUtil.parseObj(response);
         String accessToken = jsonObject.getStr("access_token");
-        WxMpResult result;
+
         if (StrUtil.isNotBlank(accessToken)) {
             int expiresIn = jsonObject.getInt("expires_in");
             //2、缓存access_token
             redisUtil.setEx("access_token",accessToken,expiresIn, TimeUnit.SECONDS);
-            result = new WxMpResult();
             result.setErrcode(0);
             result.setErrmsg("ok");
             log.info("刷新access_token成功");
