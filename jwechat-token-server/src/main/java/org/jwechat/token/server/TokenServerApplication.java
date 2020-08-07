@@ -17,7 +17,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class TokenServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TokenServerApplication.class);
+        SpringApplication.run(TokenServerApplication.class,args);
     }
 
 }

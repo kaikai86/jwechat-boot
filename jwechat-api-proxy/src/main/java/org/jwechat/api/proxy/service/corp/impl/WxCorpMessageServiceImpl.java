@@ -38,8 +38,14 @@ public class WxCorpMessageServiceImpl implements WxCorpMessageService {
         WxCorpResult wxCorpResult = null;
         try {
             String messageResult = WxHttpUtil.httpPostJson(SEND_MESSAGE_URL, objectMapper.writeValueAsString(wxCorpMessage), params);
-            log.info("消息推送成功-->应用id:{}，推送人员:{},推送部门:{}，推送标签:{}，消息类型:{}，推送数据：{}",wxCorpMessage.getAgentid(),wxCorpMessage.getTouser(),wxCorpMessage.getToparty(),wxCorpMessage.getTotag(),wxCorpMessage.getMsgType(),JSONUtil.toJsonStr(wxCorpMessage));
-            return JSONUtil.toBean(messageResult, WxCorpMessageResult.class);
+            log.info("待推送消息-->应用id:{}，推送人员:{},推送部门:{}，推送标签:{}，消息类型:{}，推送数据：{}",wxCorpMessage.getAgentid(),wxCorpMessage.getTouser(),wxCorpMessage.getToparty(),wxCorpMessage.getTotag(),wxCorpMessage.getMsgType(),JSONUtil.toJsonStr(wxCorpMessage));
+            WxCorpMessageResult wxCorpMessageResult = JSONUtil.toBean(messageResult, WxCorpMessageResult.class);
+            if (wxCorpMessageResult.getErrcode() != 0) {
+                log.warn("消息推送失败-->错误码：{},错误信息：{}", wxCorpMessageResult.getErrcode(), wxCorpMessageResult.getErrmsg());
+                return wxCorpMessageResult;
+            }
+            log.info("消息推送成功");
+            return wxCorpMessageResult;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package org.jwechat.token.server.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
@@ -64,6 +65,7 @@ public class RefreshAccessTokenServiceImpl implements RefreshAccessTokenService 
             result.setErrcode(0);
             result.setErrmsg("ok");
             log.info("刷新access_token成功");
+            log.info("[{}] 主动刷新access_token: --> {}", DateUtil.now(),result.getData().get("access_token"));
         }else{
             result = JSONUtil.toBean(response, WxMpResult.class);
             log.info("刷新access_token失败");
@@ -109,6 +111,7 @@ public class RefreshAccessTokenServiceImpl implements RefreshAccessTokenService 
             JSONObject jsonData = new JSONObject();
             jsonData.put("access_token", accessToken);
             result.setData(jsonData);
+            log.info("[{}] 主动刷新access_token: --> {}", DateUtil.now(),jsonData);
         }else{
             result = JSONUtil.toBean(response, WxMpResult.class);
             log.info("刷新access_token失败结果:--> {}",result);

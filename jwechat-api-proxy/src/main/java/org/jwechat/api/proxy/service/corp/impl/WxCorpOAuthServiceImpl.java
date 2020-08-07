@@ -38,7 +38,7 @@ public class WxCorpOAuthServiceImpl implements WxCorpOAuthService {
         params.put("access_token",accessToken);
         params.put("code",code);
         String oauthResult = WxHttpUtil.httpGetJson(GET_USER_INFO_URL, params);
-        log.info("获取用户信息成功-->应用id:{}，code码:{}",agentId,code);
+        log.info("获取用户信息成功-->应用id:{}，code码:{}，用户信息：{}",agentId,code,oauthResult);
         return JSONUtil.toBean(oauthResult, WxCorpOAuthResult.class);
 
     }

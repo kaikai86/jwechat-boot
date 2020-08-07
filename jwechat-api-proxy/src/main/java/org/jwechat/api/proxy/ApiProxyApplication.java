@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Bean;
 public class ApiProxyApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ApiProxyApplication.class);
+        SpringApplication.run(ApiProxyApplication.class,args);
     }
 
     @Bean

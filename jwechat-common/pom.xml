@@ -5,7 +5,7 @@
     <parent>
         <artifactId>jwechat-boot</artifactId>
         <groupId>org.jwechat</groupId>
-        <version>1.0.2004030</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

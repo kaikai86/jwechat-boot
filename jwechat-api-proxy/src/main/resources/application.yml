@@ -1,10 +1,14 @@
 spring:
   application:
     name: jwechat-api-proxy
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
   #redis
   redis:
     host: 192.168.1.199
-#    host: localhost
     port: 6379
     password: zk900319
     timeout: 6000ms       # 连接超时时间（毫秒）
@@ -22,6 +26,13 @@ server:
 token:
   url: http://localhost:9810
 
+#eureka
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://yun.eqbidding.com:16000/eureka/
+
+#weixin
 weixin:
 #  mp:
 #    appid: wx5d57f2472e4236f1

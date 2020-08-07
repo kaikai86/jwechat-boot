@@ -26,15 +26,12 @@ public class RefreshAccessTokenApi {
 
     @GetMapping("/mp/refresh")
     public WxMpResult refreshAccessToken() {
-        WxMpResult result = refreshAccessTokenService.refreshAccessTokenFromMP();
-        log.info("[{}] 主动刷新access_token: --> {}", DateUtil.now(),result);
-        return result;
+         return refreshAccessTokenService.refreshAccessTokenFromMP();
     }
 
     @GetMapping("/corp/refresh")
-    public WxMpResult refreshCorpAccessToken(@RequestParam(required = true) String agentId) {
-        WxMpResult result = refreshAccessTokenService.refreshAccessTokenFromCORP(agentId);
-        log.info("[{}] 主动刷新access_token: --> {}", DateUtil.now(),result);
-        return result;
+    public WxMpResult refreshCorpAccessToken(String agentId) {
+        return refreshAccessTokenService.refreshAccessTokenFromCORP(agentId);
+
     }
 }
