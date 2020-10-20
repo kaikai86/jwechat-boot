@@ -1,10 +1,11 @@
-package org.jwechat.api.proxy.service.corp.impl;
+package org.jwechat.api.proxy.service.corp.message.impl;
 
 import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.jwechat.api.proxy.service.corp.WxCorpMessageService;
+import org.jwechat.api.proxy.service.corp.impl.RefreshCorpAccessTokenServiceImpl;
+import org.jwechat.api.proxy.service.corp.message.WxCorpMessageService;
 import org.jwechat.common.bean.common.WxCorpResult;
 import org.jwechat.common.bean.common.WxCorpMessageResult;
 import org.jwechat.common.bean.corp.message.WxCorpMessage;

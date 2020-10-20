@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -18,16 +20,16 @@ public class WxCorpOAClockIn {
 
     //获取打卡记录的开始时间。Unix时间戳
     @JsonProperty("starttime")
-    private String  starttime;
+    private Long  starttime;
 
     //获取打卡记录的结束时间。Unix时间戳
     //获取记录时间跨度不超过30天
     @JsonProperty("endtime")
-    private String  endtime;
+    private Long  endtime;
 
     //需要获取打卡记录的用户列表
     //用户列表不超过100个。若用户超过100个，请分批获取
     @JsonProperty("useridlist")
-    private String  useridlist;
+    private List<String> useridlist;
 
 }

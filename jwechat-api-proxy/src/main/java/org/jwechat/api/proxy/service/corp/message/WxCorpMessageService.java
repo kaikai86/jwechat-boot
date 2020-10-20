@@ -1,4 +1,4 @@
-package org.jwechat.api.proxy.service.corp;
+package org.jwechat.api.proxy.service.corp.message;
 
 import org.jwechat.common.bean.common.WxCorpResult;
 import org.jwechat.common.bean.corp.message.WxCorpMessage;

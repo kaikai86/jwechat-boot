@@ -8,7 +8,7 @@ spring:
       force: true
   #redis
   redis:
-    host: 192.168.1.199
+    host: 192.168.0.199
     port: 6379
     password: zk900319
     timeout: 6000ms       # 连接超时时间（毫秒）
@@ -42,4 +42,6 @@ weixin:
   corp:
     enabled: true
     corpid: ww4b055f3bec10790d
-    secrets: {1000004: 'flxH-98wCRjlFe1Ncp5iEIJzuOBsEyShx7Oe5txJx8A', 1000005: '8UPp5StJN1ena2yHF3vBtSfzJZEJr33_EpDHO8PFBps'}
+    oa-clock-in-agent-id: 3010011   #默认打卡应用AgentId
+    oa-approve-agent-id: 3010040   #默认审批应用AgentId
+    secrets: {1000004: 'flxH-98wCRjlFe1Ncp5iEIJzuOBsEyShx7Oe5txJx8A', 1000005: '8UPp5StJN1ena2yHF3vBtSfzJZEJr33_EpDHO8PFBps',3010011: 'WC7tb-01bvIkFTXf39Xqy2ZxfnLblnaMh2UBZHcck7Y',3010040: 'PLrTgmHyLzkMlh_wFGf4mqpzqvCWSBXp2U1GA0kK1I0'}
