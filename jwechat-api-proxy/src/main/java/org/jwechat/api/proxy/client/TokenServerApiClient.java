@@ -22,4 +22,8 @@ public interface TokenServerApiClient {
 
     @RequestMapping(value = "/corp/refresh", method = RequestMethod.GET)
     WxMpResult refreshCORP(@RequestParam(required = true,value="agentId") String agentId);
+
+    @RequestMapping(value = "/tenant_corp/refresh", method = RequestMethod.GET)
+    WxMpResult refreshCORP(@RequestParam(value="corpId") String corpId,@RequestParam(value="agentId") String agentId,@RequestParam(value="secret") String secret);
+
 }

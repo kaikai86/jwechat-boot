@@ -32,6 +32,10 @@ public class RefreshAccessTokenApi {
     @GetMapping("/corp/refresh")
     public WxMpResult refreshCorpAccessToken(String agentId) {
         return refreshAccessTokenService.refreshAccessTokenFromCORP(agentId);
+    }
 
+    @GetMapping("/tenant_corp/refresh")
+    public WxMpResult refreshCorpAccessToken(String corpId,String agentId,String secret) {
+        return refreshAccessTokenService.refreshAccessTokenFromCORP(corpId,agentId,secret);
     }
 }

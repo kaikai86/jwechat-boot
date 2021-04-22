@@ -3,14 +3,9 @@ package org.jwechat.api.proxy.api.corp;
 import lombok.extern.slf4j.Slf4j;
 import org.jwechat.api.proxy.service.corp.message.WxCorpMessageService;
 import org.jwechat.common.bean.common.WxCorpResult;
-import org.jwechat.common.bean.corp.message.WxCorpTaskCardMessage;
-import org.jwechat.common.bean.corp.message.WxCorpTextCardMessage;
-import org.jwechat.common.bean.corp.message.WxCorpTextMessage;
+import org.jwechat.common.bean.corp.message.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Title WxCorpMessageApi
@@ -42,4 +37,20 @@ public class WxCorpMessageApi {
     public WxCorpResult textcard(@RequestBody WxCorpTextCardMessage wxCorpTextCardMessage) {
         return wxCorpMessageService.sendMessage(wxCorpTextCardMessage);
     }
+
+    @PostMapping("/tenant_text")
+    public WxCorpResult tenant_text(@RequestParam String corpId, @RequestParam String secret,@RequestBody WxCorpTextMessage wxCorpTextMessage) {
+        return wxCorpMessageService.sendMessage(corpId,secret,wxCorpTextMessage);
+    }
+
+    @PostMapping("/tenant_textcard")
+    public WxCorpResult tenant_textcard(@RequestParam String corpId, @RequestParam String secret,@RequestBody WxCorpTextCardMessage wxCorpTextCardMessage) {
+        return wxCorpMessageService.sendMessage(corpId,secret,wxCorpTextCardMessage);
+    }
+
+    @PostMapping("/tenant_file")
+    public WxCorpResult tenant_file(@RequestParam String corpId, @RequestParam String secret,@RequestBody WxCorpFileMessage wxCorpFileMessage) {
+        return wxCorpMessageService.sendMessage(corpId,secret,wxCorpFileMessage);
+    }
+
 }

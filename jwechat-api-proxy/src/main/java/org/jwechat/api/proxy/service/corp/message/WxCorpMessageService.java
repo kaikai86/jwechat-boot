@@ -19,4 +19,6 @@ public interface WxCorpMessageService {
     String SEND_MESSAGE_URL = "https://qyapi.weixin.qq.com/cgi-bin/message/send";
 
     WxCorpResult sendMessage(WxCorpMessage wxCorpMessage);
+
+    WxCorpResult sendMessage(String corpId,String secret,WxCorpMessage wxCorpMessage);
 }

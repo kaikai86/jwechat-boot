@@ -1,5 +1,6 @@
 package org.jwechat.api.proxy.service.corp.message.impl;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,6 +38,34 @@ public class WxCorpMessageServiceImpl implements WxCorpMessageService {
         Map<String, Object> params = new HashMap<>();
         params.put("access_token",accessToken);
         WxCorpResult wxCorpResult = null;
+        try {
+            String messageResult = WxHttpUtil.httpPostJson(SEND_MESSAGE_URL, objectMapper.writeValueAsString(wxCorpMessage), params);
+            log.info("待推送消息-->应用id:{}，推送人员:{},推送部门:{}，推送标签:{}，消息类型:{}，推送数据：{}",wxCorpMessage.getAgentid(),wxCorpMessage.getTouser(),wxCorpMessage.getToparty(),wxCorpMessage.getTotag(),wxCorpMessage.getMsgType(),JSONUtil.toJsonStr(wxCorpMessage));
+            WxCorpMessageResult wxCorpMessageResult = JSONUtil.toBean(messageResult, WxCorpMessageResult.class);
+            if (wxCorpMessageResult.getErrcode() != 0) {
+                log.warn("消息推送失败-->错误码：{},错误信息：{}", wxCorpMessageResult.getErrcode(), wxCorpMessageResult.getErrmsg());
+                return wxCorpMessageResult;
+            }
+            log.info("消息推送成功");
+            return wxCorpMessageResult;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return wxCorpResult;
+    }
+
+    @Override
+    public WxCorpResult sendMessage(String corpId,String secret,WxCorpMessage wxCorpMessage) {
+        String accessToken = refreshCorpAccessTokenService.getAccessToken(corpId,wxCorpMessage.getAgentid(),secret);
+        WxCorpResult wxCorpResult = new WxCorpResult();
+        if (StrUtil.isBlank(accessToken)) {
+            wxCorpResult.setErrcode(-2000);
+            wxCorpResult.setErrmsg("从缓存获取access_token失败");
+            return wxCorpResult;
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("access_token",accessToken);
         try {
             String messageResult = WxHttpUtil.httpPostJson(SEND_MESSAGE_URL, objectMapper.writeValueAsString(wxCorpMessage), params);
             log.info("待推送消息-->应用id:{}，推送人员:{},推送部门:{}，推送标签:{}，消息类型:{}，推送数据：{}",wxCorpMessage.getAgentid(),wxCorpMessage.getTouser(),wxCorpMessage.getToparty(),wxCorpMessage.getTotag(),wxCorpMessage.getMsgType(),JSONUtil.toJsonStr(wxCorpMessage));

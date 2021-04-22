@@ -91,9 +91,40 @@ public class RefreshAccessTokenServiceImpl implements RefreshAccessTokenService 
             return result;
         }
         Map<String, Object> tokenMap = new HashMap<>();
-        String secret = wxCorpConfig.getSecrets().get(agentid);
+        String secret = secrets.get(agentid);
         String corpid = wxCorpConfig.getCorpid();
         tokenMap.put("corpid", wxCorpConfig.getCorpid());
+        tokenMap.put("corpsecret", secret);
+        log.info("准备刷新access_token");
+        String response = WxHttpUtil.httpGetJson(CORP_TOKEN_BASE_URL, tokenMap);
+        JSONObject jsonObject = JSONUtil.parseObj(response);
+        String accessToken = jsonObject.getStr("access_token");
+        if (StrUtil.isNotBlank(accessToken)) {
+            log.info("获取的access_token为：{}",accessToken);
+            int expiresIn = jsonObject.getInt("expires_in");
+            //2、缓存access_token
+            String accessTokenKey = corpid.concat(":").concat(agentid);
+            redisUtil.setEx(accessTokenKey,accessToken,expiresIn, TimeUnit.SECONDS);
+            log.info("缓存access_token成功");
+            result.setErrcode(0);
+            result.setErrmsg("ok");
+            JSONObject jsonData = new JSONObject();
+            jsonData.put("access_token", accessToken);
+            result.setData(jsonData);
+            log.info("[{}] 主动刷新access_token: --> {}", DateUtil.now(),jsonData);
+        }else{
+            result = JSONUtil.toBean(response, WxMpResult.class);
+            log.info("刷新access_token失败结果:--> {}",result);
+        }
+        return result;
+    }
+
+    @Override
+    public WxMpResult refreshAccessTokenFromCORP(String corpid, String agentid, String secret) {
+        WxMpResult result = new WxMpResult();
+        //1、通过HTTP接口刷新access_token
+        Map<String, Object> tokenMap = new HashMap<>();
+        tokenMap.put("corpid", corpid);
         tokenMap.put("corpsecret", secret);
         log.info("准备刷新access_token");
         String response = WxHttpUtil.httpGetJson(CORP_TOKEN_BASE_URL, tokenMap);

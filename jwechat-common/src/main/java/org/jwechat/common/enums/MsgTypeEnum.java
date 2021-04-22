@@ -75,8 +75,13 @@ public enum MsgTypeEnum {
     /**
      * 小程序卡片
      */
-    MINIPROGRAMPAGE("miniprogrampage", "小程序卡片消息");
+    MINIPROGRAMPAGE("miniprogrampage", "小程序卡片消息"),
 
+    //--------------------------------------------企业微信------------------------------
+    /**
+     * 文本卡片
+     */
+    TEXTCARD("textcard", "文字卡片");
     private String name;
     private String description;
 

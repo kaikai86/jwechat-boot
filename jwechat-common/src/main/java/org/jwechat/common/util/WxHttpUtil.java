@@ -1,9 +1,11 @@
 package org.jwechat.common.util;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -57,6 +59,20 @@ public class WxHttpUtil {
         return HttpUtil.createPost(url)
                 .header(Header.ACCEPT, "application/json")
                 .body(jsonBody)
+                .timeout(10000)//超时，毫秒
+                .execute().body();
+    }
+
+    /**
+     *json请求
+     * @param uri   要请求的url
+     * @param filePath  请求体
+     * @param params    请求路径参数
+     * @return
+     */
+    public static String httpPostFile(String uri,String filePath, Map<String,Object> params) {
+        String url = formatUrl(uri, params);
+        return  HttpUtil.createPost(url).form("media", FileUtil.file(filePath))
                 .timeout(10000)//超时，毫秒
                 .execute().body();
     }

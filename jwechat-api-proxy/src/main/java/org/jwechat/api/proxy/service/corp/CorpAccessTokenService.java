@@ -14,4 +14,8 @@ public interface CorpAccessTokenService {
 
     boolean refreshAccessToken(String agentId);
 
+    String getAccessToken(String corpId,String agentId,String secret);
+
+    boolean refreshAccessToken(String corpId,String agentId,String secret);
+
 }

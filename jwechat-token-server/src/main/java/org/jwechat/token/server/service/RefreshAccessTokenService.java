@@ -17,6 +17,13 @@ public interface RefreshAccessTokenService {
 
     WxMpResult refreshAccessTokenFromMP();
 
-
     WxMpResult refreshAccessTokenFromCORP(String agentid);
+    /**
+     * 多租户刷新access_token
+     * @param corpid
+     * @param agentid
+     * @param secret
+     * @return
+     */
+    WxMpResult refreshAccessTokenFromCORP(String corpid,String agentid,String secret);
 }
