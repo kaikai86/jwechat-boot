@@ -5,6 +5,7 @@ import cn.hutool.http.Header;
 import cn.hutool.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,9 +71,12 @@ public class WxHttpUtil {
      * @param params    请求路径参数
      * @return
      */
-    public static String httpPostFile(String uri,String filePath, Map<String,Object> params) {
+    public static String httpPostFile(String uri,String filePath,String fileName, Map<String,Object> params) {
         String url = formatUrl(uri, params);
-        return  HttpUtil.createPost(url).form("media", FileUtil.file(filePath))
+        File file = FileUtil.file(filePath);
+        return HttpUtil.createPost(url)
+//                .header("Content-Disposition","form-data; name=\"media\";filename=".concat(fileName).concat("; filelength=").concat(String.valueOf(file.length())))
+                .form("media", file, fileName)
                 .timeout(10000)//超时，毫秒
                 .execute().body();
     }

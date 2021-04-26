@@ -28,8 +28,8 @@ public class WxCorpMediaApi {
     private WxCorpMediaService wxCorpMediaService;
 
     @GetMapping("/tenant_upload")
-    public WxCorpResult upload(String corpId,String agentId,String secret,String type,String filePath) {
-        return wxCorpMediaService.uploadMedia(corpId, agentId, secret, type, filePath);
+    public WxCorpResult upload(String corpId,String agentId,String secret,String type,String filePath,String fileName) {
+        return wxCorpMediaService.uploadMedia(corpId, agentId, secret, type, filePath,fileName);
     }
 
 

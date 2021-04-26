@@ -3,3 +3,11 @@ spring:
   redis:
     host: 127.0.0.1
     password:
+
+weixin:
+  corp:
+    enabled: true
+    corpid: wwb356180ca0531cff
+    oa-clock-in-agent-id: 3010011   #默认打卡应用AgentId
+    oa-approve-agent-id: 3010040   #默认审批应用AgentId
+    secrets: {1000006: 'pfoOawFk6g_3FwYotk6-X0I4YL504Xgs3MDchultpuc',1000007: 'FtBrf7gCbEGFnxePrvXDRAUvYbEcLns6YSU39tuCfbs',3010011: 'PRRPHROeOUsCxavkcCxejkO0iVYK-ZZajHTpjxJ8xRE',3010040: '3aWK0gWhnrG337D6z1CstmlHBCwXyKm0Ip0XbYzgvqQ'}

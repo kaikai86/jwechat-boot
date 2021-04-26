@@ -33,23 +33,23 @@ public class WxCorpMediaServiceImpl implements WxCorpMediaService {
     private RefreshCorpAccessTokenServiceImpl refreshCorpAccessTokenService;
 
     @Override
-    public WxCorpResult uploadMedia(String agentId,String type,String filePath) {
+    public WxCorpResult uploadMedia(String agentId,String type,String filePath,String fileName) {
         String accessToken = refreshCorpAccessTokenService.getAccessToken(agentId);
-        return uploadFile(agentId, accessToken, type, filePath);
+        return uploadFile(agentId, accessToken, type, filePath,fileName);
     }
 
     @Override
-    public WxCorpResult uploadMedia(String corpId, String agentId, String secret,String type,String filePath) {
+    public WxCorpResult uploadMedia(String corpId, String agentId, String secret,String type,String filePath,String fileName) {
         String accessToken = refreshCorpAccessTokenService.getAccessToken(corpId,agentId,secret);
-        return uploadFile(agentId, accessToken, type, filePath);
+        return uploadFile(agentId, accessToken, type, filePath,fileName);
     }
 
-    private WxCorpResult uploadFile(String agentId,String accessToken,String type,String filePath) {
+    private WxCorpResult uploadFile(String agentId,String accessToken,String type,String filePath,String fileName) {
         Map<String, Object> params = new HashMap<>();
         params.put("access_token",accessToken);
         params.put("type", type);
-        String messageResult = WxHttpUtil.httpPostFile(UPLOAD_MEDIA_URL, filePath, params);
-        log.info("待上传临时文件-->应用id:{}，文件类型:{},文件路径:{}",agentId,type,filePath);
+        String messageResult = WxHttpUtil.httpPostFile(UPLOAD_MEDIA_URL, filePath, fileName,params);
+        log.info("待上传临时文件-->应用id:{}，文件类型:{},文件路径:{}，文件名称:{}",agentId,type,filePath,fileName);
         WxCorpMediaResult wxCorpMediaResult = JSONUtil.toBean(messageResult, WxCorpMediaResult.class);
         if (wxCorpMediaResult.getErrcode() != 0) {
             log.warn("临时文件上传失败-->错误码：{},错误信息：{}", wxCorpMediaResult.getErrcode(), wxCorpMediaResult.getErrmsg());
@@ -58,5 +58,4 @@ public class WxCorpMediaServiceImpl implements WxCorpMediaService {
         log.info("临时文件上传成功");
         return wxCorpMediaResult;
     }
-
 }
