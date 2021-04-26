@@ -18,7 +18,7 @@ public interface WxCorpMediaService {
 //    https://qyapi.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE
     String UPLOAD_MEDIA_URL = "https://qyapi.weixin.qq.com/cgi-bin/media/upload";
 
-    WxCorpResult uploadMedia(String agentId,String type,String filePath);
+    WxCorpResult uploadMedia(String agentId,String type,String filePath,String fileName);
 
-    WxCorpResult uploadMedia(String corpId,String agentId,String secret,String type,String filePath);
+    WxCorpResult uploadMedia(String corpId,String agentId,String secret,String type,String filePath,String fileName);
 }
